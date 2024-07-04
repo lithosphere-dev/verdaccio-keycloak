@@ -50,7 +50,7 @@ class KeycloakPlugin implements IPluginAuth<{}> {
             await response.data.access_token;
           this.token = json.access_token;
           console.log("Authentication successful");
-          //const groups = await this.fetchUserGroups(username);
+          const groups = await this.fetchUserGroups(username);
           cb(null, ["groups"]);
           return resolve(true);
         }
