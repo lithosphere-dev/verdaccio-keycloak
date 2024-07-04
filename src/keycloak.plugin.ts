@@ -74,7 +74,7 @@ class KeycloakPlugin implements IPluginAuth<{}> {
 
       return response.data;
     } catch (error) {
-      console.error("Failed to get user profile:", error);
+      console.error("Failed to get user profile: ", error);
       throw error;
     }
   }
