@@ -1,6 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 import { AuthCallback, IPluginAuth, PluginOptions } from "@verdaccio/types";
+import jwt from "jsonwebtoken"
 
 interface KeycloakConfig {
   url: string;
@@ -50,8 +51,8 @@ class KeycloakPlugin implements IPluginAuth<{}> {
             await response.data.access_token;
           this.token = json.access_token;
           console.log("Authentication successful");
-          const groups = await this.fetchUserGroups(username);
-          cb(null, ["groups"]);
+          const groups = await this.fetchUserGroups(this.token);
+          cb(null, groups);
           return resolve(true);
         }
       } catch (error: any) {
@@ -62,21 +63,15 @@ class KeycloakPlugin implements IPluginAuth<{}> {
     });
   }
 
-  async fetchUserGroups(username: string): Promise<string[]> {
-    try {
-      const userProfileUrl = `${this.config.url}/admin/realms/${this.config.realm}/users?username=${encodeURIComponent(username)}`;
-
-      const response = await axios.get(userProfileUrl, {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-
-      return response.data;
-    } catch (error) {
-      console.error("Failed to get user profile: ", error);
-      throw error;
-    }
+  async fetchUserGroups(token: string): Promise<string[] | false> {
+    return new Promise<string[] | false>((resolve) => {
+      const decodedToken = jwt.decode(token);
+      if(typeof decodedToken !== "string" && decodedToken) {
+        resolve(decodedToken.groups);
+      } else {
+        resolve(false)
+      }
+    })
   }
 
   getToken(): string | null {
