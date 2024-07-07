@@ -3,7 +3,7 @@ import qs from "qs";
 import { AuthCallback, IPluginAuth, PluginOptions } from "@verdaccio/types";
 import jwt from "jsonwebtoken"
 
-interface KeycloakConfig {
+export interface KeycloakConfig {
   url: string;
   realm: string;
   clientId: string;
@@ -50,13 +50,12 @@ class KeycloakPlugin implements IPluginAuth<{}> {
           const json: { access_token: string } =
             await response.data.access_token;
           this.token = json.access_token;
-          console.log("Authentication successful");
           const groups = await this.fetchUserGroups(this.token);
           cb(null, groups);
           return resolve(true);
         }
       } catch (error: any) {
-        cb(error, ["authenticated"]);
+        cb(error, false);
         console.error("Error during authentication:", error);
         return resolve(false);
       }
