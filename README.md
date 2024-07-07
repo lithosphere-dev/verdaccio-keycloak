@@ -8,9 +8,9 @@ This plugin allows Verdaccio to authenticate users through Keycloak, an open-sou
 
 ## Prerequisites
 
-- Node.js (version 22.4.0 or higher)
-- Verdaccio (version 6 or higher)
-- Keycloak server (version X.X.X or higher) with a realm configured
+- Node.js
+- Verdaccio
+- Keycloak server
 
 # Installation
 
