@@ -1,3 +1,5 @@
+The plugin is still in WIP
+
 # Overview
 
 This GitHub project provides a plugin for integrating Keycloak authentication with the Verdaccio registry. Verdaccio is a lightweight private npm proxy registry, and Keycloak is an open-source identity and access management solution. This plugin allows Verdaccio to use Keycloak for user authentication, enabling centralized user management and enhanced security for your npm registry.
