@@ -1,4 +1,5 @@
-The plugin is still in WIP
+The plugin is still in WIP:
+- Working on groups and allow access
 
 # Overview
 
